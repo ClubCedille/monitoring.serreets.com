@@ -1,1 +1,1 @@
-# serreets.internal.com
+# monitoring.serreets.com
