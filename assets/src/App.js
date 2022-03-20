@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header'
+import Footer from './components/Footer'
+import {Container} from 'react-bootstrap'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
+import SignupPage from './pages/SignupPage';
+import { useEffect , useState} from 'react';
 
 function App() {
+
+  const [email, setEmail] = useState('')
+  useEffect(() => {
+    (
+      async() => {
+        const response = await fetch('http://localhost:3001/api/user', {
+          method: 'GET',
+          headers: {'Content-Type': 'application-json'},
+          credentials: 'include',
+        })
+        const data = await response.json()
+        setEmail(data.email)
+      })()
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header email={email} setEmail={setEmail}/>
+        <main>
+          <Container>
+            <Route exact path='/' component={() => <HomePage email={email}/>}></Route>
+            <Route path='/login' component={LoginPage}></Route>
+            <Route path='/signup' component={SignupPage}></Route>
+          </Container>
+        </main>
+      <Footer/>
+    </Router>
   );
 }
 
