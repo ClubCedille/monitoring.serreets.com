@@ -12,11 +12,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ClubCedille/monitoring.serreets.com/api/models"
 	"github.com/gin-contrib/cors"
 	"github.com/golang-jwt/jwt"
 	_ "github.com/lib/pq"
 
-	"github.com/ClubCedille/monitoring.serreets.com/api/models"
 	"github.com/gin-gonic/gin"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
@@ -42,7 +42,7 @@ func main() {
 	} else {
 		fmt.Println("Connected to the database")
 	}
-
+	fmt.Println("Connection string: ", connectionString)
 	// CORS middleware
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
@@ -199,10 +199,10 @@ func LogIn(ctx *gin.Context) {
 func GetUserByEmail(user *models.User) (*models.User, *Error) {
 	res, err := models.Users(qm.Where("email=?", user.Email)).One(context.Background(), db)
 	if err != nil {
-		return nil, NewBadRequestError("Invalid username and password")
+		return nil, NewUnauthorized("Invalid username and password")
 	} else {
 		if err := bcrypt.CompareHashAndPassword([]byte(res.Password), []byte(user.Password)); err != nil {
-			return nil, NewBadRequestError("Invalid username and password")
+			return nil, NewUnauthorized("Invalid username and password")
 		}
 		resUser := &models.User{ID: res.ID, Email: res.Email, Password: ""}
 		return resUser, nil
@@ -230,5 +230,13 @@ func NewPageNotFound(message string) *Error {
 		Message: message,
 		Status:  http.StatusNotFound,
 		Error:   "not found",
+	}
+}
+
+func NewUnauthorized(message string) *Error {
+	return &Error{
+		Message: message,
+		Status:  http.StatusUnauthorized,
+		Error:   "unauthorized",
 	}
 }
