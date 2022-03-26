@@ -1,6 +1,8 @@
 # monitoring.serreets.com
 
 
+Site interne du club [serreÉTS](https://serreets.com) permettant de surveiller une serre expérimentale sur le campus de l'ÉTS.
+
 ## Dependencies
 1. [go](https://go.dev/)
 2. [nodejs](https://nodejs.org/en/)
