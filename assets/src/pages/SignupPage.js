@@ -10,7 +10,7 @@ const SignupPage = ({history}) => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    await fetch('http://localhost:3001/api/signup', {
+    await fetch(process.env.REACT_APP_URL + 'api/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application-json'},
       body: JSON.stringify({
