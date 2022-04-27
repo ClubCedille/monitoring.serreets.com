@@ -1,0 +1,18 @@
+version: '3'
+services:
+  serreets-frontend:
+    image: serreets-frontend:latest
+    ports:
+      - 3000:80
+  serreets-backend:
+    image: serreets-backend:latest
+    environment:
+      DATABASE: DATABASE
+      HOST: HOST
+      USER: USER
+      PASSWORD: PASSWORD
+      ORIGINS: http://localhost:3000
+      PORT: 3001
+      SECRET_KEY: ""
+    ports:
+      - 3001:3001
