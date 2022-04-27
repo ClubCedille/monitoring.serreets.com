@@ -33,3 +33,10 @@ $ npm run build
 $ yarn build
 ```
 It bundles React in production mode to the build folder
+
+# Docker
+From the root directory, run this command:
+```bash
+docker build -t serreets-backend . && docker build --file=assets/Dockerfile -t serreets-frontend --build-arg REACT_APP_URL=http://127.0.0.1:3001/ . && 
+docker-compose -f docker-compose.yml up
+```
