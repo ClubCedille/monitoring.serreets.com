@@ -1,6 +1,6 @@
 [psql]
 dbname = "DATABASE"
 user = "USER"
-pass = "PASSWORD"
+pass = "PASS"
 host = "HOST"
 sslmode = "disable"
