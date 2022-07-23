@@ -20,9 +20,9 @@ Visit http://localhost:3001/api/hello in your web browser.
 ### Web
 You can run the web app  in development mode with :
 ```bash
-$ npm start
+$ npm start --prefix assets
 # or with yarn
-$ yarn start
+$ yarn --cwd assets run start
 ```
 Open http://localhost:3000 to view it in the browser.
 
