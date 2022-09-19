@@ -31,7 +31,7 @@ type Error struct {
 
 var (
 	router           = gin.Default()
-	connectionString = "dbname=" + os.Getenv("DATABASE") + " host=" + os.Getenv("HOST") + " user=" + os.Getenv("USER") + " password=" + os.Getenv("PASSWORD") + " sslmode=disable"
+	connectionString = "dbname=" + os.Getenv("DATABASE_NAME") + " host=" + os.Getenv("DATABASE_HOST") + " user=" + os.Getenv("DATABASE_USER") + " password=" + os.Getenv("DATABASE_PASSWORD") + " sslmode=disable"
 	db, err          = sql.Open("postgres", connectionString)
 )
 
