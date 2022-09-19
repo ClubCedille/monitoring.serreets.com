@@ -31,7 +31,7 @@ type Error struct {
 
 var (
 	router           = gin.Default()
-	connectionString = "dbname=" + os.Getenv("DATABASE") + " host=" + os.Getenv("HOST") + " user=" + os.Getenv("USER") + " password=" + os.Getenv("PASSWORD") + " sslmode=disable"
+	connectionString = "dbname=" + os.Getenv("DATABASE_NAME") + " host=" + os.Getenv("DATABASE_HOST") + " user=" + os.Getenv("DATABASE_USER") + " password=" + os.Getenv("DATABASE_PASSWORD") + " sslmode=disable"
 	db, err          = sql.Open("postgres", connectionString)
 )
 
@@ -42,16 +42,16 @@ func main() {
 	} else {
 		fmt.Println("Connected to the database")
 	}
-	fmt.Println("Connection string: ", connectionString)
+
 	// CORS middleware
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{os.Getenv("ORIGINS")},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:3000"
+			return origin == os.Getenv("ORIGINS")
 		},
 		MaxAge: 12 * time.Hour,
 	}))
@@ -68,7 +68,7 @@ func main() {
 		ctx.JSON(NewPageNotFound("Page not found").Status, gin.H{})
 	})
 
-	router.Run(":3001")
+	router.Run(":" + os.Getenv("PORT"))
 }
 
 func GetUserInformationWithToken(ctx *gin.Context) {

@@ -10,7 +10,8 @@ const LoginPage = ({history}) => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    await fetch('http://localhost:3001/api/login', {
+    console.log("LOG: " + process.env.REACT_APP_URL)
+    await fetch(process.env.REACT_APP_URL + 'api/login', {
       method: 'POST',
       headers: {'Content-Type': 'application-json'},
       credentials: 'include',
@@ -19,7 +20,7 @@ const LoginPage = ({history}) => {
         password
       })
     })
-
+    
     history.push('/')
   }
 

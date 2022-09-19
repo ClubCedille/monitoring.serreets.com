@@ -30,8 +30,14 @@ Open http://localhost:3000 to view it in the browser.
 
 To build the web app for production, run : 
 ```bash
-$ npm run build 
+$ npm run build --prefix assets
 # or with yarn 
-$ yarn build
+$ yarn --cwd assets build 
 ```
 It bundles React in production mode to the build folder
+
+# Docker
+From the root directory, run this command:
+```bash
+docker build -t serreets-backend . && docker build --file=assets/Dockerfile -t serreets-frontend --build-arg REACT_APP_URL=http://127.0.0.1:3001/ . && docker-compose -f docker-compose.yml up
+```
